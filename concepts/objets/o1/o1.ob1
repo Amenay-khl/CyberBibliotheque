@@ -1,0 +1,244 @@
+--=========================================================================
+--                          Modèle d'objets O1
+---------------------------------------------------------------------------
+-- Ce modèle d'objet est exprimé en ObjectScript.
+-- Voir https://modelscript.readthedocs.io/en/latest/languages/objects1/index.html
+-- ObjectScript1 est une version annotée du langage USE OCL.
+-- Les annotations sont définies sous forme de commentaires :
+--    "@" pour les annotations d'instructions,
+--    "|" pour les annotations de documentation
+--=========================================================================
+--
+--@ object model O1
+--@ import glossary model from "../../glossaires/glossaires.gls"
+--@ import class model from "../../classes/classes.cl1"
+
+--| (1) Nourry Blanc est professeur de musique.
+    ! create nourry : Enseignant
+    ! nourry.nom := 'Nourry Blanc'
+    ! nourry.matiere := 'musique'
+    ! nourry.login := 'Nourryb' --@+
+    ! nourry.motDePasse := 'kjds' --@+
+
+--| (2) Nourry Blanc intervient en terminale S876.
+    ! create s876 : Classe
+    ! s876.code := 'S876'
+    ! insert (nourry, s876) into IntervientDans
+
+--| (3) Alicia Ganto est professeur de math.
+    ! create Alicia : Enseignant
+    ! Alicia.nom := 'Alicia Ganto'
+    ! Alicia.matiere := 'math'
+    ! Alicia.login := 'Aliciag' --@+
+    ! Alicia.motDePasse := 'kjnvd' --@+
+
+
+--| (4) Mélanie Schwartz est en terminale S876.
+    ! create Mélanie : Eleve
+    ! Mélanie.nom := 'Mélanie Schwartz'
+    ! Mélanie.login := 'MelaniS' --@+
+    ! Mélanie.motDePasse := 'jbdc' --@+
+
+--| (5) Sofia Cho est en seconde S210.
+    ! create S210 : Classe
+    ! s876.code := 'S210'
+    ! create Sofia : Eleve
+    ! Sofia.nom := 'Sofia Cho'
+    ! Sofia.login := 'SofiaC'
+    ! Sofia.motDePasse := 'lknsd'
+    ! insert (Sofia,S210) into EstInscritDans
+    ! insert (Alicia,S210) into IntervientDans
+
+
+--| (6) Nourry Blanc intervient en seconde R232 et en terminale S876.
+    ! create R232 : Classe
+    ! R232.code := 'R232'
+    ! insert (nourry, R232) into IntervientDans
+
+
+--| (7) Nourry organise un atelier "Tolerance !".
+    ! create Tolerance : Atelier
+
+   
+
+--| (8) Cet atelier a lieu du 23/11/2020 au 27/11/2020
+    ! Tolerance.debut := '23/11/2020'
+    ! Tolerance.fin := '27/11/2020'
+    ! Tolerance.nom_atelier := 'tolerance'
+    ! tolerance.nb_eleve := 15 --@+
+    ! Tolerance.oeuvre_etudiee := 'All is 1'
+
+
+--| (9) C'est la terminale S876 qui va travailler sur cet atelier.
+    ! insert (s876,Tolerance) into TravailleSur
+    ! insert (nourry,Tolerance) into Realise
+
+
+
+--| (10) L'atelier est basé sur l'album "All is 1", ISBN 875-78000-89250.
+    ! create AllIsOne : Oeuvre 
+    ! AllIsOne.type := livre
+    ! AllIsOne.titre := 'all is 1'
+    ! AllIsOne.isbn := '875-78000-89250'
+    ! insert (Tolerance, AllIsOne) into Etudie
+    
+
+
+
+--| (11) Kobi Farhi et Yossi Sassi sont auteurs de cet album.
+    ! create Kobi : Personne 
+    ! create Yossi : Personne 
+    ! Kobi.nom := 'Kobi Farhi'
+    ! Yossi.nom := 'Yossi Sassi'
+    ! insert (Kobi, AllIsOne) into EstAuteurDe
+    ! insert (Yossi, AllIsOne) into EstAuteurDe
+
+
+--| (12) Il y a 4 exemplaires à la bibliothèque "Mandela/Paris"
+    ! create MandelaParis : Bibliotheque 
+    ! MandelaParis.nom := 'Mandela/Paris'
+    ! create AllIsOne1 : Stock 
+    ! AllIsOne1.Nom_oeuvre :='all is 1'
+    ! create AllIsOne2 : Stock 
+    ! AllIsOne2.Nom_oeuvre :='all is 1'
+    ! create AllIsOne3 : Stock 
+    ! AllIsOne2.Nom_oeuvre :='all is 1'
+    ! create AllIsOne4 : Stock 
+    ! AllIsOne2.Nom_oeuvre :='all is 1'
+    ! insert (MandelaParis, AllIsOne1) into Dispose
+    ! insert (MandelaParis, AllIsOne2) into Dispose
+    ! insert (MandelaParis, AllIsOne3) into Dispose
+    ! insert (MandelaParis, AllIsOne4) into Dispose
+
+
+--| (13) Il y a 2 exemplaires à la bibliothèque "Champollion/Figeac".
+    ! create ChampollionFigeac : Bibliotheque 
+    ! ChampollionFigeac.nom := 'Champollion/Figeac'
+    ! create AllIsOne5 : Stock 
+    ! AllIsOne5.Nom_oeuvre :='all is 1'
+    ! create AllIsOne6 : Stock 
+    ! AllIsOne6.Nom_oeuvre :='all is 1'
+    ! insert (ChampollionFigeac, AllIsOne5) into Dispose
+    ! insert (ChampollionFigeac, AllIsOne6) into Dispose
+
+
+--| (14) Les exemplaires pour l'atelier seront pris à Mandela.
+    ! insert (MandelaParis,Tolerance) into Fourni
+
+
+--| (15) Comme il y a 5 élèves en terminale S876, le stock sera suffisant.
+    ! create Khial : Eleve
+    ! Khial.nom := 'Khial Amenay'
+    ! Khial.login := 'khiala' --@+
+    ! Khial.motDePasse := 'kjbsvd' --@+
+
+    ! create izardq : Eleve
+    ! izardq.nom := 'izardq'
+    ! izardq.login := 'izardq'  --@+
+    ! izardq.motDePasse := 'pokk,d'  --@+
+
+    ! create gaillaga : Eleve
+    ! gaillaga.nom := 'gaillaga'
+    ! gaillaga.login := 'gaillaga'  --@+
+    ! gaillaga.motDePasse := 'lnsd'  --@+
+    
+    ! create iermoliq : Eleve
+    ! iermoliq.nom := 'iermoliq'
+    ! iermoliq.login := 'iermoliq'  --@+
+    ! iermoliq.motDePasse := 'lknqs'  --@+
+
+    ! insert (Khial, s876) into EstInscritDans
+    ! insert (izardq, s876) into EstInscritDans
+    ! insert (gaillaga, s876) into EstInscritDans
+    ! insert (iermoliq, s876) into EstInscritDans
+
+
+
+--| (16) Il y a 2 exemplaires de "La tolérance pour les Nuls" à Mandela.
+    ! create LatolérancePourLesNuls : Oeuvre 
+    ! LatolérancePourLesNuls.titre := 'La tolérance pour les Nuls'
+    ! LatolérancePourLesNuls.isbn := '525-78545-89656'
+    ! LatolérancePourLesNuls.type := 'livre'
+
+    ! create LatolérancePourLesNuls1 : Stock 
+    ! LatolérancePourLesNuls1.Nom_oeuvre :='La tolérance pour les Nuls'
+    ! create LatolérancePourLesNuls2 :  Stock 
+    ! LatolérancePourLesNuls2.Nom_oeuvre :='La tolérance pour les Nuls'
+    ! insert (MandelaParis, LatolérancePourLesNuls2) into Dispose
+    ! insert (MandelaParis, LatolérancePourLesNuls1) into Dispose
+
+
+
+--| (17) Kobi Farhi est l'auteur de ce livre, ISBN 525-78545-89656.
+    ! insert (Kobi, LatolérancePourLesNuls) into EstAuteurDe
+
+
+
+--| (18) Sofia Cho est allé à "Mandela/Paris" le 10/02/2020.
+--| (19) Elle a emprunté le disque Razamanaz.
+    ! create Razamanaz : oeuvre 
+    ! Razamanaz.type musique
+    ! Razamanaz.titre := 'Razamanaz'
+    ! Razamanaz.isbn := 'jd-qsddq-sqdsq' --@+
+    ! create empruntSofia1 : Emprunt 
+    ! empruntSofia1.date_emprunt := '10/02/2020'
+    ! empruntSofia1.date_rendu :='16/02/2020'
+    ! empruntSofia1.Nom_oeuvre :='Razamanaz'
+    ! empruntSofia1.type :: uneSemaine
+    ! insert(Sofia,empruntSofia1) into AEmprunte
+
+--| (20) Elle a aussi emprunté le livre le même jour.
+    ! create empruntSofia2 : Emprunt 
+    ! empruntSofia2.date_emprunt := '10/02/2020'
+    ! empruntSofia2.date_rendu :='16/02/2020'
+    ! empruntSofia2.Nom_oeuvre :='La tolérance pour les Nuls'
+    ! empruntSofia2.type :: uneSemaine
+    ! insert(Sofia,empruntSofia2) into AEmprunte
+
+
+
+--| (21) Elle a rendu le livre 3 jours après le 13/02/2020.
+    ! empruntSofia2.type :: rendu
+  
+--| (22) Elle l'a ensuite emprunté de nouveau le 15/05/2020.
+    ! create empruntSofia3 :  Emprunt 
+    ! empruntSofia3.date_emprunt := '15/05/2020'
+    ! empruntSofia3.date_rendu := '22/05/2020'
+    ! empruntSofia3.Nom_oeuvre :='La tolérance pour les Nuls'
+    ! empruntSofia3.type :: uneSemaine
+    ! insert(Sofia,empruntSofia3) into AEmprunte
+
+
+
+
+
+--| (23) Elle l'a rendu le 28/05/2020 après 2 prolongations de 7 jours.
+    ! create prolongation1 : Prolongation 
+    ! prolongation1.nbJours := 7
+    ! prolongation1.valide := true
+    ! create prolongation2 : Prolongation 
+    ! prolongation1.nbJours := 7
+    ! prolongation1.valide := true
+    ! empruntSofia3.EtatDEmprunt :: rendu
+    ! insert (prolongation1,empruntSofia3) into Prolonge
+    ! insert (prolongation2,empruntSofia3) into Prolonge
+
+
+
+--| (24) La premiere prolongation a été faite le 20/05/2020.
+    ! empruntSofia3.date_emprunt := '20/05/2020'
+
+--| (25) La deuxième a été faite le 25/05/2020.
+    ! empruntSofia3.date_emprunt := '25/05/2020'
+
+--| (26) C'est Jacky Chen qui a fait les deux.
+    ! create Jacky : Employe 
+    ! Jacky.nom := 'Jacky'
+    ! Jacky.login := 'jackyC'
+    ! Jacky.motDePasse := 'k,sddc' --@+ 
+
+    ! insert (Jacky,prolongation1) into Valide
+    ! insert (Jacky,prolongation2) into Valide
+    ! insert (Jacky,empruntSofia1) into ValideP --@+
+    ! insert (Jacky,empruntSofia2) into ValideP --@+
+    ! insert (Jacky,empruntSofia3) into ValideP --@+

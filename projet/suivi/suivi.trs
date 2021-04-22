@@ -1,0 +1,26 @@
+//=========================================================================
+//                      Track model
+//-------------------------------------------------------------------------
+// This track model is expressed in TrackScript
+// See https://modelscript.rtfd.io/en/latest/languages/tracks/index.html
+//=========================================================================
+-Comment modéliser magazinier ?
+On ne peut pas vraiment le modéliser mais un magazinier est un employé donc on utilise directement employé.
+
+Un stock délivre des oeuvres et une bibliothèque dispose de stock(s). Une oeuvre quand à elle appartient à une bibliothèque.
+
+-Problème avec historique dans scénario comment le modéliser ?
+Il faut utiliser l'association AEmprunte qui montre qu'une personne a emprunté * oeuvres.
+On obtient donc l'historique de la personne.
+
+-Etat DEmprunt: 
+On est parti du principe qu'une personne peut emprunté une oeuvre durant 1 ou 3 semaines.
+elle peut aussi perdre l'oeuvre ou prolongé son emprunt.
+On a par la suite rajouter rendu pour savoir si l'oeuvre est rendu (voir le scénario 21).
+
+
+track model CyberBibliotheque
+import glossary model from "../glossaries/glossaries.gls"
+
+
+

@@ -1,0 +1,150 @@
+--=========================================================================
+--                        Modèle de scénarios
+---------------------------------------------------------------------------
+-- Ce modèle de scénario est exprimé en ScenarioScript1.
+-- Voir https://modelscript.readthedocs.io/en/latest/languages/scenarios1/index.html
+-- ScenarioScript1 est version annotée du langage USE OCL.
+-- Les annotations sont en commentaires et commencent par
+--    "@" pour les annotations d'instructions
+--    "|" pour les annotations de commentaires
+--=========================================================================
+--
+--@ scenario model S1
+--@ import glossary model from "../../../concepts/glossaries/glossaries.gls"
+--@ import class model from "../../../concepts/classes/classes.cl1"
+--@ import usecase model from "../../cu/cu.uss"
+
+
+    --| (1) Nourry Blanc est professeur de musique.
+        ! create nourry : Enseignant
+        ! nourry.nom := 'Nourry Blanc'
+        ! nourry.matiere := 'musique'
+        ! nourry.login := Undefined
+        ! nourry.motDePasse := Undefined
+
+
+    --| (2) Il décide de réaliser en terminale S876 un atelier "Tolerance !".
+        ! create s876 : Classe
+        ! s876.code := 'S876'
+        ! create atTolerance : Atelier
+        ! atTolerance.titre := 'Tolerance !'
+        ! insert (nourry, atTolerance) into Realise
+        ! insert (S876,atTolerance) into TravailleSur
+
+    --| (3) Cet atelier aura lieu du 23/11/2019 au 27/11/2019.
+        ! atTolerance.debut := '23/11/2019'
+        ! atTolerance.fin := '27/11/2019'
+
+    --| (4) Cet atelier sera basé sur l'album "All is 1".
+        ! create AllIsOne : Oeuvre
+        ! AllIsOne.type ::livre
+        ! AllIsOne.titre := 'All is 1'
+        ! AllIsOne.isbn := 'wjn-wxcc-4ww' --@+
+        ! atTolerance.oeuvre_etudiee:'All is 1'
+        ! insert (atTolerance,AllIsOne) into Etudie
+
+
+
+
+--| (5) Il y a 4 exemplaires à la bibliothèque "Mandela/Paris".
+    
+    ! create MandelaParis : Bibliotheque 
+    ! MandelaParis.nom := 'Mandela/Paris'
+    ! create AllIsOne1 : Stock 
+    ! AllIsOne1.Nom_oeuvre :='all is 1'
+    ! create AllIsOne2 : Stock 
+    ! AllIsOne2.Nom_oeuvre :='all is 1'
+    ! create AllIsOne3 : Stock 
+    ! AllIsOne3.Nom_oeuvre :='all is 1'
+    ! create AllIsOne4 : Stock 
+    ! AllIsOne4.Nom_oeuvre :='all is 1'
+    ! insert (MandelaParis, AllIsOne1) into Dispose
+    ! insert (MandelaParis, AllIsOne2) into Dispose
+    ! insert (MandelaParis, AllIsOne3) into Dispose
+    ! insert (MandelaParis, AllIsOne4) into Dispose
+
+
+--| (6) Mélanie Schwartz, se rend la première à la bibliothèque.
+    ! create Melanie : Enseignant
+    ! melanie.nom := 'Melanie'
+    ! melanie.matiere := 'musique' --@+
+    ! melanie.login := Undefined
+    ! melanie.motDePasse := Undefined
+    
+--| (7) C'est le 20/11/2019, elle se rend tout d'abord au guichet.
+--| (8) Elle rend l'album "Razamanaz" qu'elle avait depuis le 16/11/2019.
+    ! create Razamanaz : oeuvre 
+    ! Razamanaz.type musique
+    ! Razamanaz.titre := 'Razamanaz'
+    ! create empruntMelanie1 : Emprunt 
+    ! empruntMelanie1.date_emprunt := '16/11/2019'
+    ! empruntMelanie1.date_rendu :='20/11/2019'
+    ! empruntMelanie1.Nom_oeuvre :='Razamanaz'
+    ! empruntMelanie1.type :: uneSemaine
+    ! insert(Melanie,empruntMelanie1) into AEmprunte
+
+
+--| (9) Il s'agissait de l'unique exemplaire dans cette bibliothèque.
+    ! create stockRazamanaz :stock
+    ! stockRazamanaz.Nom_oeuvre := 'Razamanaz'
+
+--| (10) Jacky Chen, bibliothécaire, voit qu'il n'y a pas de problèmes.
+    ! create jacky : Employe
+    ! jacky.nom := 'Jacky Chen'
+    ! jacky.login := Undefined
+    ! jacky.motDePasse := Undefined
+    
+--| (11) Il valide le fait que l'album est rentré et range l'exemplaire.
+    ! insert (jacky,empruntMelanie1) into ValideP
+    
+--| (12) Un magazinier viendra plus tard pour mettre les oeuvres en rayon.
+    ! insert (MandelaParis,stockRazamanaz) into Dispose
+
+--| (13) Mélanie rentre dans la bibliothèque et va dans les rayons.
+--| (14) Elle voit qu'il y a 4 exemplaires de l'album "All is 1".
+--| (15) Elle prend un des exemplaires et va au guichet ou se trouve Jacky.
+    ! create empruntMelanie2 : Emprunt 
+    ! empruntMelanie2.date_emprunt := '20/11/2019'
+    ! empruntMelanie2.date_rendu :='27/11/2019'
+    ! empruntMelanie2.Nom_oeuvre :='All is 1'
+    ! insert(Melanie,empruntMelanie2) into AEmprunte
+
+--| (16) Jacky scanne l'exemplaire et lui dit qu'elle peut le garder 1 s.
+    ! insert (jacky,empruntMelanie2) into ValideP
+    ! empruntMelanie2.type :: uneSemaine
+
+
+--| (19) Le 26/11/2019, Mélanie va à la bibliothéque pour une prolongation.
+    ! create prolongation1: Prolongation
+    ! prolongation1.nbJours := 7
+    
+--| (20) A l'accueil elle rencontre Sybra, un magaziner qu'elle connait bien.
+    ! create sybra : Employe
+    ! sybra.nom := 'Sybra'
+    ! sybra.login := Undefined
+    ! sybra.motDePasse := Undefined
+    
+--| (21) Sybra regarde l'historique des emprunts de Mélanie.
+--| (22) Son historique montre qu'il n'y pas eu de problème dans le passé.
+--| (23) De plus cet emprunt concerne un atelier pour sa classe.
+    ! create AtelierM : Atelier
+    ! AtelierM.oeuvre_etudiee := 'All is 1'
+    ! AtelierM.debut := Undefined
+    ! AtelierM.fin := Undefined
+    ! AtelierM.nom_atelier := Undefined
+    ! AtelierM.nb_eleve := Undefined
+    ! insert (empruntMelanie2, AtelierM) into Concerne
+    ! insert (MandelaParis,AtelierM) into  Fourni
+    
+--| (24) Il valide donc sans hésiter la prolongation pour une semaine.
+    ! insert (sybra,prolongation1) into Valide
+
+    ! insert (MandelaParis,atTolerance) into  Fourni
+    ! insert (nourry,s876) into  IntervientDans
+    ! insert (prolongation1,empruntMelanie1) into Prolonge
+    ! insert (s876,AtelierM) into TravailleSur
+    ! insert (nourry,AtelierM) into Realise
+    ! insert (s876,atTolerance) into TravailleSur
+
+
+

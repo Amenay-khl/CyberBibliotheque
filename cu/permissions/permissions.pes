@@ -1,0 +1,20 @@
+//=========================================================================
+//                      Modèle de permissions
+//-------------------------------------------------------------------------
+// Ce modèle de permissions est écrit en PermissionScript
+// Voir https://modelscript.rtfd.io/en/latest/languages/permissions/index.html
+//=========================================================================
+
+permission model CyberBibliotheque
+import glossary model from "../../concepts/glossaires/glossaires.gls"
+import class model from "../../concepts/classes/classes.cl1"
+import usecase model "../cu/cu.uss"
+// import relation model "../relations/relations.res"
+
+Enseignant can Create Atelier,Realise,TravailleSur
+Enseignant, Bibliothecaire can Read EstInscritDans
+SGI can Create, Delete EstInscritDans
+Bibliothecaire can Create, Read Concerne
+ModifierSonMotDePasse can RU Membre.motDePasse
+
+# TODO: ajouter d'autres règles

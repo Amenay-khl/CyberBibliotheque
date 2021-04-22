@@ -1,0 +1,234 @@
+--=========================================================================
+--                          Modèle de classe
+---------------------------------------------------------------------------
+-- Ce modèle de classe est exprimé en ClassScript1.
+-- Voir https://modelscript.readthedocs.io/en/latest/languages/classes1/index.html
+-- ClassScript1 est une version annotée du langage USE OCL.
+-- Les annotations sont en commentaires et commencent par :
+--    "@" pour les annotations d'instructions,
+--    "|" pour les annotations de documentation.
+--=========================================================================
+--
+--@ class model CyberBibliotheque
+--@ import glossary model from "../glossaires/glossaires.gls"
+
+
+model CyberBibliotheque
+
+---------------------------------------------------------------------------
+-- enumerations
+---------------------------------------------------------------------------
+
+enum TypeDOeuvre {
+    livre,
+    film,
+    musique
+}
+
+enum EtatDEmprunt {
+    uneSemaine,
+    toisSsemaines,
+    perdu,
+    retard,
+    rendu
+}
+
+
+---------------------------------------------------------------------------
+-- classes
+---------------------------------------------------------------------------
+
+class Personne
+attributes
+    nom : String
+end
+
+
+class Membre < Personne
+attributes
+    login : String
+    motDePasse : String
+end
+
+class Employe < Membre        
+end
+
+class Eleve < Membre      
+end
+
+
+class Enseignant < Membre
+    attributes
+        matiere : String      
+end
+
+
+class Classe
+attributes
+    code : String
+end
+
+
+class Emprunt
+    attributes
+        date_emprunt  : String  --@ {Date}
+        date_rendu  : String   --@ {Date}
+        Nom_oeuvre : String
+        type : EtatDEmprunt   
+end
+
+class Prolongation
+    attributes
+        nbJours : Integer
+        valide : Boolean   
+end
+
+
+
+class Bibliotheque
+attributes
+    nom : String
+end
+
+
+class Oeuvre
+attributes
+    type : TypeDOeuvre
+    titre : String
+    isbn : String
+end
+
+
+class Atelier
+    attributes
+        debut : String  
+        fin : String
+        oeuvre_etudiee : String
+        nom_atelier : String
+        nb_eleve : Integer
+end 
+
+class Stock
+    attributes
+        Nom_oeuvre : String      
+end
+
+
+
+---------------------------------------------------------------------------
+-- associations
+---------------------------------------------------------------------------
+
+association EstInscritDans between
+    Eleve [*] role eleves
+    Classe [1] role classe
+end
+
+
+association IntervientDans between
+    Enseignant [1..*] role enseignants
+    Classe [*] role classes
+end
+
+
+association TravailleSur between
+    Classe [1] role classe
+    Atelier [*] role ateliers
+end
+
+
+association Concerne between
+    Emprunt [*] role emprunts
+    Atelier [0..1] role atelier
+end
+
+
+association Realise between
+    Enseignant [1] role enseignant  
+    Atelier [*] role ateliers
+end
+
+
+association AEmprunte 
+    --| un membre peut emprunter
+    --| une oeuvre.
+    between
+        Membre [1] role membre
+        Emprunt[*] role emprunts
+            
+end
+
+association Valide 
+    --| Un employee valide 
+    --| la date d'emprunt.
+    between
+        Employe [1] role employe
+        Prolongation[*] role prolongations
+            
+end
+
+association Prolonge 
+    --| Une personne peut emprunter 
+    --| 1 à 3 fois.
+    between
+        Prolongation[0..3] role prolongations
+        Emprunt [1] role bibliotheque    
+end
+
+association Fourni 
+    --| Une bibliothèque fourni
+    --| des oeuvres a des ateliers.
+    between
+        Bibliotheque [1] role bibliotheque
+        Atelier[*] role ateliers
+            
+end
+
+     association Etudie
+    --| Un atelier de personne 
+    --| etudie un oeuvre.
+    between
+        Atelier [*] role ateliers
+        Oeuvre[*] role oeuvres
+            
+end
+
+      association EstAuteurDe
+    --| Une personne auteur 
+    --| qui ecrit une oeuvre.
+    between
+        Personne [*] role personnes
+        Oeuvre[*] role oeuvres
+            
+end
+
+
+association AppartientA 
+    --| Un oeuvre appartient
+    --| à une bibliothèque.
+    between
+        Oeuvre [*] role oeuvres
+        Bibliotheque[*] role bibliotheque
+            
+end
+
+association Dispose 
+    --| Une bibliothèque dispose
+    --| de n stock.
+    between
+        Bibliotheque [1] role bibliotheque
+        Stock[*] role stocks
+            
+end
+
+association Circule 
+    between
+        Bibliotheque [*] role bibliothequesDonnantes
+        Bibliotheque [*] role bibliothequesRecevantes
+end
+
+association ValideP 
+    between
+        Employe [1] role employe
+        Emprunt [*] role empruntValides
+end

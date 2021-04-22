@@ -1,0 +1,29 @@
+Etat O1
+=======
+
+* (C1) Nourry Blanc est professeur de musique.
+* (C2) Nourry Blanc intervient en terminale S876.
+* (C3) Alicia Ganto est professeur de math.
+* (C4) Mélanie Schwartz est en terminale S876.
+* (C5) Sofia Cho est en seconde S210.
+* (C6) Nourry Blanc intervient en seconde R232 et en terminale S876.
+* (C7) Nourry organise un atelier "Tolerance !".
+* (C8) Cet atelier a lieu du 23/11/2020 au 27/11/2020
+* (C9) C'est la terminale S876 qui va travailler sur cet atelier.
+* (C10) L'atelier est basé sur l'album "All is 1", ISBN 875-78000-89250.
+* (C11) Kobi Farhi et Yossi Sassi sont auteurs de cet album.
+* (C12) Il y a 20 exemplaires à la bibliothèque "Mandela/Paris"
+* (C13) Il y a 12 exemplaires à la bibliothèque "Champollion/Figeac".
+* (C14) Les exemplaires pour l'atelier seront pris à Mandela.
+* (C15) Comme il y a 15 élèves en terminale S876, le stock sera suffisant.
+* (C16) Il y a 30 exemplaires de "La tolérance pour les Nuls" à Mandela.
+* (C17) Kobi Farhi est l'auteur de ce livre, ISBN 525-78545-89656.
+* (C18) Sofia Cho est allé à "Mandela/Paris" le 10/02/2020.
+* (C19) Elle a emprunté le disque Razamanaz.
+* (C20) Elle a aussi emprunté le livre le même jour.
+* (C21) Elle a rendu le livre 3 jours après le 13/02/2020.
+* (C22) Elle l'a ensuite emprunté de nouveau le 15/05/2020.
+* (C23) Elle l'a rendu le 28/05/2020 après 2 prolongations de 7 jours.
+* (C24) La premiere prolongation a été faite le 20/05/2020.
+* (C25) La deuxième a été faite le 25/05/2020.
+* (C26) C'est Jacky Chen qui a fait les deux.

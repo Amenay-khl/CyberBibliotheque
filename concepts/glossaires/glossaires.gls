@@ -1,0 +1,102 @@
+//=========================================================================
+//                      Modèle de glossaire
+//-------------------------------------------------------------------------
+// Ce modèle de glossaire est exprimé en GlossaryScript
+// voir https://modelscript.readthedocs.io/en/latest/languages/glossaries/index.html
+//=========================================================================
+
+glossary model CyberBibliotheque
+
+
+
+RNDP
+    | Réseau National des Bibliotheques Pédagogiques.
+    | Commanditaire de `CyberBibliotheque`.
+    | Ce réseau est formé de plus de 340 `Bibliotheque` reparties sur
+    | le territoire national. L'objectif premier du réseau est de
+    | constituer une base bibliothèquaire globale et d'assurer
+    | les mouvements entre `Bibliotheque` partenaires.
+
+CyberBibliotheque
+    | Logicel à réaliser pour le compte du `RNDP` et dont l'objectif
+    | premier est de permettre l'organisation d'`Atelier` pédagogiques
+    | ainsi que d'automatiser les fonctions habituelles des `Bibliotheque`s.
+
+Bibliotheque
+    synonyms: Bib
+    | Bibliotheque du réseau `RNDP`. L'objectif premier de ces
+    | `Bibliotheque`s est de favoriser la pratique de la lecture chez les
+    | élèves, de faciliter l'organisation d'`Atelier`s dans les écoles
+    | primaires, collèges et lycées. Les `Bibliotheque`s sont également
+    | ouvertes aux employés et aux professeurs. L'objectif
+    | premier de `CyberBibliotheque` est cependant de prendre en compte
+    | le besoin des classes plutôt que du personnel. Le type d'`Oeuvre`s
+    | disponibles au sein du réseau est de   toute façon essentiellemnt
+    | dirigé à un jeune public.
+
+Stock
+    // TODO: à definir
+    | Stocks que dispose chaque `Bibliotheque`. chaque stock  delivre des `Oeuvres`
+    | appartenant a differentes `Bibliotheque`.L'objectif premier est de 
+    | connaitre combien chaque `Bibliotheque` dispose d'exemplaire d'`oeuvre`.
+
+
+Personne
+    // TODO: à definir
+    | definit les personnes qui sont auteurs des `oeuvres`
+    
+
+Emprunt
+    // TODO: à definir
+    |Permet de pouvoir recuperer l'etat courant de chaque emprunts
+    |En connaissant la date d'emprunt, le nom de l'`oeuvre` qu'on emprunte et pour combien 
+    |de temps ainsi que la date prévu pour laquelle l'`Oeuvre` sera rendu.
+    |chaque `Membre`  a droit à plusieurs emprunt.
+    |chaque emprunt peut avoir jusqu'à 3 `prolongations`.
+
+Atelier
+    // TODO: à definir
+    | Un `Enseignant` peut realiser des Ateliers et préciser la date 
+    | de debut et de fin de celui-ci. les ateliers sont utilisé 
+    | pour etudier des `Oeuvres` qui seront fourni par une 
+    |'Bibliotheque' avec un certains nombre d'exemplaire
+    | concernant des `Emprunts` fait pour l'Atelier'.
+
+Oeuvre
+    // TODO: à definir
+    | Une Oeuvre est defini par un titre, un type et un isbn.
+    | les oeuvres ont pour auteur des `Personnes` et sont étudié dans des `ateliers`.
+    | Les oeuvres sont délivré par le `Stock` d'une `Bibliotheque`
+    | les oeuvre peuvent se trouver dans plusieurs `Bibliotheque`
+
+# ajouter 2 termes ainsi que leur définition
+
+Prolongation
+
+    | Le nombre de 'Prolongation' est limité à 3 et concerne un `emprunt`  
+    | une prolongation correspond à une periode de 7 jours de plus pour un `Emprunt`.
+    | n'importe quel `Employe` peut valider ou non la prolongation.
+
+Membre
+
+    | un Membre est une 'Personne' qui a un login et un motDePasse.
+    | Un Membre peut être soit un 'Employe' soit un 'Eleve' soit un
+    | 'Enseignant'
+    | chaque Membre peut faire des `Emprunt`
+
+Eleve
+    | les Eleves sont des `Personnes` `Membre` inscrit dans une `Classe` 
+
+Enseignant
+    | Les Enseignant sont des `Personnes` `Membre` qui interviennent dans des `Classes`
+    | une enseigant peut realiser des `Ateliers`
+
+Employe
+    | un Employe est une `Personne` `Membre` qui valide ou non les `Prolongations`
+
+Classe
+    | chaque Classe acceuille des `Eleves` 
+    |  les `Enseignants` peuvent intervenir dans plusieurs classes
+    | chaque Classe travaille sur des `Ateliers`
+
+ 

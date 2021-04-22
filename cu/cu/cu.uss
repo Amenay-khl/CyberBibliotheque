@@ -1,0 +1,33 @@
+//=========================================================================
+//                      Modele de cas d'utilisation
+//-------------------------------------------------------------------------
+// This usecase model is expressed in UsecaseScript
+// See https://modelscript.rtfd.io/en/latest/languages/usecases/index.html
+//=========================================================================
+
+usecase model CyberBibliotheque
+import glossary model from "../../concepts/glossaires/glossaires.gls"
+
+
+usecase ModifierSonMotDePasse
+    # En pratique chaque usecase devrait être décrit.
+    # Mais il n'est pas nécessaire de la faire ici.
+
+usecase CreerUnAtelier
+
+usecase ProlongerUnEmprunt
+
+#TODO: ajouter des cas d'utilisation si nécessaire
+
+interactions
+    Membre ModifierSonMotDePasse
+    Enseignant CreerUnAtelier
+    Bibliothecaire ProlongerUnEmprunt
+
+#TODO: compléter les interactions
+
+
+
+
+
+
